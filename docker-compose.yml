@@ -6,8 +6,8 @@ services:
       - $FS_ARCHIVE_PORT:$FS_ARCHIVE_PORT
       - $FS_PASSCODE_PORT:$FS_PASSCODE_PORT
     volumes:
-      - ./:/archive
-      - ./:/logs
+      - $LOCAL_ARCHIVE_DIRECTORY/:$FS_ARCHIVE_DIRECTORY
+      - $LOCAL_LOG_DIRECTORY:$FS_LOG_DIRECTORY
     environment:
       - FS_LOG_DIRECTORY
       - FS_ARCHIVE_DIRECTORY
