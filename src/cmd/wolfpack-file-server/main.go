@@ -28,6 +28,7 @@ var (
 	passcodePort     string
 	archivePort      string
 	secret           string
+	host             string
 )
 
 func main() {
@@ -44,8 +45,10 @@ func main() {
 	passcodePort = os.Getenv("FS_PASSCODE_PORT")
 	archivePort = os.Getenv("FS_ARCHIVE_PORT")
 	secret = os.Getenv("FS_SECRET")
+	host = os.Getenv("FS_HOST")
 
-	if logDirectory == "" || archiveDirectory == "" || passcodePort == "" || archivePort == "" || secret == "" {
+	if logDirectory == "" || archiveDirectory == "" || host == "" ||
+		passcodePort == "" || archivePort == "" || secret == "" {
 		log.Fatal("Environment variables missing")
 	}
 
@@ -92,7 +95,7 @@ func getPassCode(resp http.ResponseWriter, req *http.Request) {
 
 	passcode := generateSecureKey(20)
 	c.Add(passcode, nil, cache.DefaultExpiration)
-	url := fmt.Sprintf("http://localhost:%s/?passcode=%s", archivePort, passcode)
+	url := fmt.Sprintf("%s:%s/?passcode=%s", host, archivePort, passcode)
 	resp.Write([]byte(url))
 	return
 }
