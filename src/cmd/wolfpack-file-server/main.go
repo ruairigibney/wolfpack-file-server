@@ -49,6 +49,9 @@ func main() {
 
 	if logDirectory == "" || archiveDirectory == "" || host == "" ||
 		passcodePort == "" || archivePort == "" || secret == "" {
+		log.Printf(`logDirectory: %s; archiveDirectory: %s; host: %s; passCodePort: %s
+			archivePort: %s; secret: %s`, logDirectory, archiveDirectory, host,
+			passcodePort, archivePort, secret)
 		log.Fatal("Environment variables missing")
 	}
 
