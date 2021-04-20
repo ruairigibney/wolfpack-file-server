@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -96,7 +97,11 @@ func getPassCode(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	passcode := generateSecureKey(20)
+	passcode, err := generateSecureKey(32)
+	if err != nil {
+		http.Error(resp, "Error generating key", http.StatusInternalServerError)
+		return
+	}
 	c.Add(passcode, nil, cache.DefaultExpiration)
 	url := fmt.Sprintf("%s:%s/?passcode=%s", host, archivePort, passcode)
 	resp.Write([]byte(url))
@@ -117,8 +122,13 @@ func RestrictedHandler(h http.Handler) http.Handler {
 				http.Error(resp, "Invalid OTP", http.StatusInternalServerError)
 				return
 			} else {
-				session.Values["token"] = generateSecureKey(20)
-				err := session.Save(req, resp)
+				var err error
+				session.Values["token"], err = generateSecureKey(32)
+				if err != nil {
+					http.Error(resp, "Error generating token", http.StatusInternalServerError)
+					return
+				}
+				err = session.Save(req, resp)
 				if err != nil {
 					http.Error(resp, err.Error(), http.StatusInternalServerError)
 					return
@@ -130,10 +140,10 @@ func RestrictedHandler(h http.Handler) http.Handler {
 	})
 }
 
-func generateSecureKey(length int) string {
+func generateSecureKey(length int) (string, error) {
 	b := make([]byte, length)
 	if _, err := rand.Read(b); err != nil {
-		return ""
+		return "", errors.New("Error generating key")
 	}
-	return hex.EncodeToString(b)
+	return hex.EncodeToString(b), nil
 }
