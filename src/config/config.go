@@ -12,6 +12,7 @@ type Config struct {
 	ArchivePort      string `envconfig:"ARCHIVE_PORT"`
 	Secret           string `envconfig:"SECRET"`
 	Host             string `envconfig:"HOST"`
+	IsDev            bool   `envconfig:"IS_DEV"`
 	Store            *sessions.CookieStore
 	C                *cache.Cache
 }
