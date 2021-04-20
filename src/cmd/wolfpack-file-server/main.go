@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -36,7 +37,11 @@ func main() {
 
 	checkConfig(&cfg)
 
-	logFile, err := os.OpenFile("wolfpack-file-server.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	t := time.Now()
+	layout := "2006-01-02T15-04-05"
+	filename := fmt.Sprintf("%s%swolfpack-file-server-%s.log",
+		cfg.LogDirectory, string(os.PathSeparator), t.Format(layout))
+	logFile, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		log.Fatal(err)
 	}
