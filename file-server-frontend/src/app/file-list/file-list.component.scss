@@ -1,0 +1,27 @@
+@use '../colours';
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 16px;
+
+  box-shadow: 5px;
+  box-shadow: colours.$grey;
+}
+
+li {
+  display: block;
+  color: colours.$blue;
+  padding: 8px 16px;
+  text-decoration: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Change the link color on hover */
+.selected {
+  background-color: colours.$blue;
+  color: colours.$white;
+  border-radius: 10px;
+}

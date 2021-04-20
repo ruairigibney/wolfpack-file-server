@@ -2,3 +2,4 @@
 .vscode/launch.json
 src/cmd/wolfpack-file-server/wolfpack-file-server.log
 src/cmd/wolfpack-file-server/__debug_bin
+logs

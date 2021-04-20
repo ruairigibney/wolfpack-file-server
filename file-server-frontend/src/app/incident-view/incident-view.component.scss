@@ -1,0 +1,24 @@
+@use '../colours';
+
+.incident-view ::ng-deep div {
+  &.container {
+    margin: 0px;
+    background-color: colours.$grey;
+  }
+}
+
+@font-face {
+  font-family: summer-blacktop;
+  src: url(../../assets/font/SummerBlacktop.ttf) format("opentype");
+}
+
+.description {
+  font-family: "summer-blacktop", "arial", sans-serif;
+  font-weight: 400;
+  letter-spacing: 10px;
+  color: colours.$grey;
+  margin: 0px;
+  font-size: 160px;
+  margin-left: 32px;
+  max-width: 140px;
+}
