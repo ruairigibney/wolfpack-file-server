@@ -1,0 +1,18 @@
+<div class="main">
+    <div *ngIf="isAuthed">
+        <div class="header">
+            <app-header></app-header></div>
+        <div class="bottom">
+            <div class="file-list">
+                <app-file-list></app-file-list>
+            </div>
+            <div class="incident-view">
+                <app-incident-view></app-incident-view>
+            </div>
+        </div>
+    </div>
+    <div class="unauth" *ngIf="!isAuthed">
+        <p class="unauth-header">Wolf Pack<br/>File Server</p>
+        <p class="unauth-content">Restricted Access</p>
+    </div>
+</div>

@@ -15,3 +15,6 @@ services:
       - FS_ARCHIVE_PORT
       - FS_SECRET
       - FS_HOST
+  frontend:
+    build: ./file-server-frontend
+    ports: [80:80]

@@ -1,0 +1,69 @@
+@use 'colours';
+
+.main {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  z-index: 0;
+  flex: 0 0 64px;
+  display: flex;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: row;
+}
+
+.file-list {
+  flex: 0 0 240px;
+  order: 0;
+  align-self: stretch;
+  background-color: colours.$yellow;
+  border-radius: 24px;
+  margin-right: 16px;
+}
+
+div {
+  color: colours.$blue;
+  background-color: colours.$white;
+  border-radius: 5px;
+  margin: 0px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+.incident-view {
+  flex: 2 0;
+  order: 1;
+  height: 93vh;
+  overflow: scroll;
+  overflow-x: hidden;
+  border-radius: 24px;
+}
+
+@font-face {
+  font-family: summer-blacktop;
+  src: url(../assets/font/SummerBlacktop.ttf) format("opentype");
+}
+
+.unauth {
+  font-family: "summer-blacktop", "arial", sans-serif;
+  font-weight: 400;
+  color: colours.$blue;
+  margin: 0px;
+  text-align: center;
+}
+
+.unauth-header {
+  font-size: 200px;
+  margin-left: 32px;
+  max-width: 1000px;
+  margin: 0px;
+}
+
+.unauth-content {
+  font-size: 80px;
+  max-width: 1000px;
+}
