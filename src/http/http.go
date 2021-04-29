@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"sort"
 
 	"github.com/gorilla/sessions"
 	"github.com/patrickmn/go-cache"
@@ -70,18 +71,13 @@ func (c *Cfg) GetPassCode(resp http.ResponseWriter, req *http.Request) {
 		return
 	}
 	c.C.Add(passcode, nil, cache.DefaultExpiration)
-	var url string
-	if c.IsDev {
-		url = fmt.Sprintf("%s:4200?passcode=%s", c.Host, passcode)
-	} else {
-		url = fmt.Sprintf("%s?passcode=%s", c.Host, passcode)
-	}
+	url := fmt.Sprintf("%s:4200?passcode=%s", c.Host, passcode)
 	resp.Write([]byte(url))
 }
 
 func (c *Cfg) RestrictedHandler(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(resp http.ResponseWriter, req *http.Request) {
-		resp = setHeaders(resp, c.Host, c.IsDev)
+		resp = setHeaders(resp, c.Host)
 
 		session, _ := c.Store.Get(req, "wolfpack-file-server")
 		if session.Values["token"] == nil {
@@ -150,12 +146,8 @@ func (c *Cfg) getFile(resp http.ResponseWriter, req *http.Request) {
 	resp.Write(file)
 }
 
-func setHeaders(resp http.ResponseWriter, host string, isDev bool) http.ResponseWriter {
-	if isDev {
-		resp.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s:4200", host))
-	} else {
-		resp.Header().Set("Access-Control-Allow-Origin", host)
-	}
+func setHeaders(resp http.ResponseWriter, host string) http.ResponseWriter {
+	resp.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s:4200", host))
 	resp.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 	resp.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	resp.Header().Set("Access-Control-Allow-Credentials", "true")
@@ -181,8 +173,9 @@ func (c *Cfg) listFiles(resp http.ResponseWriter, req *http.Request) {
 
 			fD = append(fD, file)
 		}
-
 	}
+
+	sort.Slice(fD, func(i, j int) bool { return sortName(fD[i].FileName) < sortName(fD[j].FileName) })
 
 	resp.Header().Set("Content-Type", "application/json")
 	resp.WriteHeader(http.StatusOK)

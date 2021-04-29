@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeStyle, SafeUrl } from '@angular/platform-browser';
 import { FileApiService } from '../file-api.service';
 

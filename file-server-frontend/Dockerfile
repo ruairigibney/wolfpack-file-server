@@ -1,9 +1,8 @@
-FROM node:latest as build
-WORKDIR /usr/local/app
-COPY ./ /usr/local/app/
+FROM node:latest
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json /app/package.json
 RUN npm install
-RUN npm run build
-
-FROM nginx:latest
-COPY --from=build /usr/local/app/dist/file-server-frontend /usr/share/nginx/html
-EXPOSE 80
+RUN npm install -g @angular/cli@7.3.9
+COPY . /app
+CMD ng serve --host 0.0.0.0

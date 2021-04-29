@@ -17,4 +17,5 @@ services:
       - FS_HOST
   frontend:
     build: ./file-server-frontend
-    ports: [80:80]
+    ports: 
+      - "4200:4200"
