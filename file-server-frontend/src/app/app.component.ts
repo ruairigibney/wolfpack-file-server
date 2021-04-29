@@ -8,6 +8,7 @@ import { AuthService } from './auth.service';
 })
 export class AppComponent implements OnInit {
   isAuthed = false;
+  hasFiles = false;
   title = 'file-server-frontend';
 
   constructor(private auth: AuthService) {
@@ -18,6 +19,10 @@ export class AppComponent implements OnInit {
     this.auth.gotCookie.subscribe(
       (gotCookie) => this.isAuthed = gotCookie
     ) 
+  }
+
+  setHasFiles(hasFiles: boolean){
+    this.hasFiles = hasFiles;
   }
 
 }

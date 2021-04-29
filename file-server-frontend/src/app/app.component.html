@@ -3,8 +3,8 @@
         <div class="header">
             <app-header></app-header></div>
         <div class="bottom">
-            <div class="file-list">
-                <app-file-list></app-file-list>
+            <div [ngClass]="{'file-list-colour': hasFiles}" class="file-list">
+                <app-file-list (hasFiles)="setHasFiles($event)"></app-file-list>
             </div>
             <div class="incident-view">
                 <app-incident-view></app-incident-view>

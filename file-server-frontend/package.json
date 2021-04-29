@@ -20,7 +20,6 @@
     "@angular/platform-browser-dynamic": "~11.2.10",
     "@angular/router": "~11.2.10",
     "ng2-directory-tree": "^0.4.0",
-    "ng6-file-man": "^3.0.2",
     "ngx-cookie-service": "^11.0.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

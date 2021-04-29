@@ -11,6 +11,7 @@ import { IncidentFile } from '../incident-file';
 })
 export class FileListComponent implements OnInit {
   @Output() fileSelected: EventEmitter<string> = new EventEmitter();
+  @Output() hasFiles: EventEmitter<boolean> = new EventEmitter();
   fileList: IncidentFile[] = [];
   currentFile: string = "";
 
@@ -21,8 +22,10 @@ export class FileListComponent implements OnInit {
     this.authService.gotCookie.subscribe(
       (hasCookie) => (hasCookie) ? (
         this.fileService.getFileList().subscribe(
-          data => this.fileList = data
-        )) : null
+          data => {
+            this.fileList = data;
+            if (this.fileList.length > 0) {this.hasFiles.emit(true)};
+          })) : null
       )
   }
 
