@@ -15,6 +15,12 @@ export class AuthService {
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute,
     private cookieService: CookieService) { }
 
+  removeCookie(): void {
+    this.cookieService.delete('wolfpack-file-server');
+    this.gotCookie.next(false);
+    this.router.navigateByUrl("/")
+  }
+
   doAuth(): void {
     if (this.cookieService.check('wolfpack-file-server')) {
       this.gotCookie.next(true);
