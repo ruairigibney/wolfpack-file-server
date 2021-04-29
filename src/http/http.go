@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"sort"
+	"time"
 
 	"github.com/gorilla/sessions"
 	"github.com/patrickmn/go-cache"
@@ -26,6 +27,7 @@ type Cfg struct {
 
 type FileDetails struct {
 	FileName string
+	ModTime  time.Time
 }
 
 func HttpHandler(c *config.Config) {
@@ -169,13 +171,14 @@ func (c *Cfg) listFiles(resp http.ResponseWriter, req *http.Request) {
 
 			file := FileDetails{
 				FileName: v.Name(),
+				ModTime:  v.ModTime(),
 			}
 
 			fD = append(fD, file)
 		}
 	}
 
-	sort.Slice(fD, func(i, j int) bool { return sortName(fD[i].FileName) < sortName(fD[j].FileName) })
+	sort.Slice(fD, func(i, j int) bool { return fD[i].ModTime.Unix() > fD[j].ModTime.Unix() })
 
 	resp.Header().Set("Content-Type", "application/json")
 	resp.WriteHeader(http.StatusOK)
