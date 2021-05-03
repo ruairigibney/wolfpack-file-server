@@ -1,6 +1,6 @@
 <div *ngIf='fileList.length > 0'>
     <ul>
-        <li [ngClass]="{'selected': currentFile == file.FileName}" (click)="clicked($event, file)" *ngFor="let file of fileList">
+        <li [ngClass]="{'selected': currentFile === file.FileName}" (click)="clicked($event, file)" *ngFor="let file of fileList">
           {{ file?.FileName }}
        </li>
       </ul>
