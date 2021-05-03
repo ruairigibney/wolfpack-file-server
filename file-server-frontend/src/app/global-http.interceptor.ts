@@ -19,7 +19,6 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    console.log(request);
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 403) {

@@ -20,12 +20,11 @@ export class IncidentViewComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(
       (params) => {
-        const filename = params.filename;
+        const filename = `${params.id}.html`;
         if (filename) {
           this.fileService.getFile(filename).subscribe(
-            (response) => this.trustedIncidentHtml = this.sanitizer.bypassSecurityTrustHtml(response)
-
-      ); }
+            (response) => this.trustedIncidentHtml = this.sanitizer.bypassSecurityTrustHtml(response));
+          this.fileService.setCurrentFile(filename); }
 
       }
     );
