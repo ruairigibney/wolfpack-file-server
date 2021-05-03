@@ -16,7 +16,7 @@ export class FileApiService {
   }
 
   getFile(fileName: string): Observable<string>{
-    return this.http.get(`${environment.apiUrl}/files/content?filename=${fileName}.html`,
+    return this.http.get(`${environment.apiUrl}/files/content?filename=${fileName}`,
     {withCredentials: true, responseType: 'text'});
   }
 

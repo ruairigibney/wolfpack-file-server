@@ -30,6 +30,10 @@ export class FileListComponent implements OnInit {
             if (this.fileList.length > 0) {this.hasFiles.emit(true); }
           })) : null
       );
+
+    this.fileService.currentFile.subscribe((file) =>
+      this.currentFile = file
+    );
   }
 
   clicked(event: any, file: IncidentFile): void {
