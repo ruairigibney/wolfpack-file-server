@@ -28,6 +28,6 @@ export class GlobalHttpInterceptor implements HttpInterceptor {
 
         return throwError(error);
       })
-    )
+    );
   }
 }

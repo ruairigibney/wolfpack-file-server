@@ -6,9 +6,7 @@
             <div [ngClass]="{'file-list-colour': hasFiles}" class="file-list">
                 <app-file-list (hasFiles)="setHasFiles($event)"></app-file-list>
             </div>
-            <div class="incident-view">
-                <app-incident-view></app-incident-view>
-            </div>
+            <router-outlet></router-outlet>
         </div>
     </div>
     <div class="unauth" *ngIf="!isAuthed">

@@ -1,8 +1,8 @@
 <div class="incident-view">
-    <div *ngIf=true>
+    <div *ngIf="trustedIncidentHtml">
         <div [innerHtml]="trustedIncidentHtml"></div>
     </div>
-    <div *ngIf=true class="description-container">
+    <div *ngIf="!trustedIncidentHtml" class="description-container">
         <p class="description">INCIDENT ARCHIVE</p>
     </div>
 </div>

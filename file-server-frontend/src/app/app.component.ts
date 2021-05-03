@@ -18,10 +18,10 @@ export class AppComponent implements OnInit {
     this.auth.doAuth();
     this.auth.gotCookie.subscribe(
       (gotCookie) => this.isAuthed = gotCookie
-    ) 
+    );
   }
 
-  setHasFiles(hasFiles: boolean){
+  setHasFiles(hasFiles: boolean): void{
     this.hasFiles = hasFiles;
   }
 

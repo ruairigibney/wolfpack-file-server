@@ -77,7 +77,7 @@ func (c *Cfg) GetPassCode(resp http.ResponseWriter, req *http.Request) {
 
 func (c *Cfg) RestrictedHandler(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(resp http.ResponseWriter, req *http.Request) {
-		resp = setHeaders(resp, c.Host)
+		resp = setHeaders(resp, c.Host, c.FrontEndPort)
 
 		session, _ := c.Store.Get(req, "wolfpack-file-server")
 		if session.Values["token"] == nil {
@@ -146,8 +146,8 @@ func (c *Cfg) getFile(resp http.ResponseWriter, req *http.Request) {
 	resp.Write(file)
 }
 
-func setHeaders(resp http.ResponseWriter, host string) http.ResponseWriter {
-	resp.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s:4200", host))
+func setHeaders(resp http.ResponseWriter, host string, port string) http.ResponseWriter {
+	resp.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s:%s", host, port))
 	resp.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 	resp.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	resp.Header().Set("Access-Control-Allow-Credentials", "true")

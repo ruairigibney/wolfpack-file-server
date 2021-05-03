@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer, SafeHtml, SafeStyle, SafeUrl } from '@angular/platform-browser';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { FileApiService } from '../file-api.service';
 
 @Component({
@@ -8,21 +9,26 @@ import { FileApiService } from '../file-api.service';
   styleUrls: ['./incident-view.component.scss']
 })
 export class IncidentViewComponent implements OnInit {
-  trustedIncidentHtml: SafeHtml = "";
-  
-  constructor(private fileService: FileApiService, private sanitizer: DomSanitizer) { }
+  trustedIncidentHtml: SafeHtml = '';
+
+  constructor(private fileService: FileApiService,
+              private sanitizer: DomSanitizer,
+              private router: Router,
+              private route: ActivatedRoute) {
+    }
 
   ngOnInit(): void {
-    this.fileService.currentFile.subscribe(
-      (data) => {
-        if (data) {
-          this.fileService.getFile(data).subscribe(
+    this.route.params.subscribe(
+      (params) => {
+        const filename = params.filename;
+        if (filename) {
+          this.fileService.getFile(filename).subscribe(
             (response) => this.trustedIncidentHtml = this.sanitizer.bypassSecurityTrustHtml(response)
-          );
-        }
-        }
-    )
 
+      ); }
+
+      }
+    );
   }
 
 }
