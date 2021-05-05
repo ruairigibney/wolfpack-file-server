@@ -147,6 +147,11 @@ func (c *Cfg) getFile(resp http.ResponseWriter, req *http.Request) {
 }
 
 func setHeaders(resp http.ResponseWriter, host string, port string) http.ResponseWriter {
+    if port == "" {
+        resp.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s", host))
+    } else {
+        resp.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s:%s", host, port))
+    }
 	resp.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s:%s", host, port))
 	resp.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 	resp.Header().Set("Access-Control-Allow-Headers", "Content-Type")
