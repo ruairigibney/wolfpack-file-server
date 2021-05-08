@@ -152,7 +152,6 @@ func setHeaders(resp http.ResponseWriter, host string, port string) http.Respons
     } else {
         resp.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s:%s", host, port))
     }
-	resp.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s:%s", host, port))
 	resp.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 	resp.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	resp.Header().Set("Access-Control-Allow-Credentials", "true")
