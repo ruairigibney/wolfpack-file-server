@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"sort"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/gorilla/sessions"
 	"github.com/patrickmn/go-cache"
 	"github.com/rs/cors"
@@ -72,6 +73,9 @@ func (c *Cfg) GetPassCode(resp http.ResponseWriter, req *http.Request) {
 	}
 	c.C.Add(passcode, nil, cache.DefaultExpiration)
 	url := fmt.Sprintf("%s:4200?passcode=%s", c.Host, passcode)
+	resp = setHeaders(resp, c.Host, c.FrontEndPort)
+	log.Print("headers set")
+	spew.Dump(resp.Header())
 	resp.Write([]byte(url))
 }
 
@@ -91,6 +95,8 @@ func (c *Cfg) RestrictedHandler(h http.Handler) http.Handler {
 			}
 
 			resp.WriteHeader(status)
+			log.Print("restricted handler")
+			spew.Dump(resp.Header())
 			return
 		}
 
@@ -147,11 +153,11 @@ func (c *Cfg) getFile(resp http.ResponseWriter, req *http.Request) {
 }
 
 func setHeaders(resp http.ResponseWriter, host string, port string) http.ResponseWriter {
-    if port == "" {
-        resp.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s", host))
-    } else {
-        resp.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s:%s", host, port))
-    }
+	if port == "" {
+		resp.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s", host))
+	} else {
+		resp.Header().Set("Access-Control-Allow-Origin", fmt.Sprintf("%s:%s", host, port))
+	}
 	resp.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 	resp.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	resp.Header().Set("Access-Control-Allow-Credentials", "true")
